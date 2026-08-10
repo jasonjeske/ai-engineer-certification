@@ -1,4 +1,4 @@
-https://github.com/krypteiasec/ai-engineer-certification/raw/main/assets/intro.mp4
+https://github.com/user-attachments/assets/791396cc-3b07-4149-8c98-10a9ef632974
 
 <h1 align="center">AI Engineer Certification</h1>
 
