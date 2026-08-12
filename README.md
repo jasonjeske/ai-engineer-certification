@@ -8,11 +8,11 @@ https://github.com/user-attachments/assets/791396cc-3b07-4149-8c98-10a9ef632974
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/price-free-7a1f1f?style=flat-square" alt="Free">
-  <img src="https://img.shields.io/badge/license-MIT-5c1717?style=flat-square" alt="MIT">
-  <img src="https://img.shields.io/badge/courses-19-b53d3d?style=flat-square" alt="19 courses">
-  <img src="https://img.shields.io/badge/labs-151-b53d3d?style=flat-square" alt="151 labs">
-  <img src="https://img.shields.io/badge/setup-none-5c1717?style=flat-square" alt="No setup">
+  <img src="https://img.shields.io/badge/price-free-1b6fb8?style=flat-square" alt="Free">
+  <img src="https://img.shields.io/badge/license-MIT-1b6fb8?style=flat-square" alt="MIT">
+  <img src="https://img.shields.io/badge/courses-19-2e9bf5?style=flat-square" alt="19 courses">
+  <img src="https://img.shields.io/badge/labs-151-2e9bf5?style=flat-square" alt="151 labs">
+  <img src="https://img.shields.io/badge/setup-none-1b6fb8?style=flat-square" alt="No setup">
 </p>
 
 <p align="center">
@@ -23,11 +23,11 @@ https://github.com/user-attachments/assets/791396cc-3b07-4149-8c98-10a9ef632974
 
 Everyone says AI will take your job. This certification is built on the opposite bet: that the people who can *build* with AI become unstoppable. It takes you from Python and the math you need all the way to shipping AI agents and building a language model by hand, with a runnable lab for every single chapter. No paywall, no login, no catch.
 
-The full interactive certification, prose teaching, narrated videos, quizzes, in-browser labs, and a free certificate, lives at **[krypteiasec.com/academy](https://krypteiasec.com/academy)**. This repository is the code layer: everything you clone, read, and run yourself.
+The full interactive certification, prose teaching, quizzes, in-browser labs, and a free certificate, lives at **[krypteiasec.com/academy](https://krypteiasec.com/academy)**. This repository is the code layer: everything you clone, read, and run yourself.
 
 ## What's inside
 
-**19 courses · 151 chapters · a runnable lab, a Jupyter notebook, and a narrated video for every single chapter · two really-trained model checkpoints.** Free, no login, no paywall. Run 117 of the 151 labs right in your browser at **[krypteiasec.com/academy](https://krypteiasec.com/academy)**.
+**19 courses · 151 chapters · a runnable lab and a Jupyter notebook for every single chapter · two really-trained model checkpoints.** Free, no login, no paywall. Run 117 of the 151 labs right in your browser at **[krypteiasec.com/academy](https://krypteiasec.com/academy)**.
 
 ### Core track · become the engineer (Courses 0 to 13)
 
