@@ -1,6 +1,6 @@
 # AI Engineering Academy companion labs.
 # Most labs are pure standard-library Python and need nothing here.
-# These cover the PyTorch and notebook labs (Courses 1, 7, 8, and the trained models).
+# These cover the PyTorch and notebook labs (Courses 1, 10, 11, and the trained models).
 torch>=2.2
 numpy>=1.24
 jupyter>=1.0

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-CAPSTONE 6 (ch6): A self-red-teamed LLM app that attacks its own guardrails.
+CAPSTONE 5 (ch5): A self-red-teamed LLM app that attacks its own guardrails.
 
-Capstone project five, and Ada's differentiator: an app that does not CLAIM it
+Capstone project four, and Ada's differentiator: an app that does not CLAIM it
 is secure, it PROVES it by attacking itself on a schedule and scoring the result.
 This is the security-course harness turned into one app that ships with its own
 red-team suite. The app has guardrails (input sanitizing, output DLP, secret

@@ -112,7 +112,7 @@ def main():
     print("PORTFOLIO RUBRIC SCORED AND RANKED THE SPECS: %s" % ("YES" if ok else "NO"))
     if not ok:
         sys.exit(1)
-    print("Now you know the target. The next five capstones each hit it. Build one.")
+    print("Now you know the target. The next four capstones each hit it. Build one.")
 
 
 if __name__ == "__main__":

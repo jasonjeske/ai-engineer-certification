@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-CAPSTONE 7 (ch7): Packaging the portfolio, a manifest and README generator.
+CAPSTONE 6 (ch6): Packaging the portfolio, a manifest and README generator.
 
 The projects are built. Now they have to be FOUND and UNDERSTOOD in thirty
 seconds, because that is all the attention a screener gives. This final capstone
 is the packaging layer: a small generator that takes a manifest of your finished
-projects (the five capstones you just built) and emits, for each one, the
+projects (the four capstones you just built) and emits, for each one, the
 README-in-30-seconds a hiring manager actually reads, one that leads with the
 business OUTCOME, links a live DEMO, names the METRICS, and lists the STACK.
 
@@ -25,7 +25,7 @@ for _c in _cands:
         sys.path.insert(0, os.path.abspath(_c)); break
 from academy_llm import complete  # noqa: F401  (available to every capstone)
 
-# ── The portfolio manifest: the five capstones you just built. ───────────────────
+# ── The portfolio manifest: the four capstones you just built. ───────────────────
 MANIFEST = [
     {
         "name": "RAG Assistant over Company Docs",
@@ -35,11 +35,11 @@ MANIFEST = [
         "stack": ["embeddings", "vector search", "grounded generation", "citations"],
     },
     {
-        "name": "Trip-Budget Tool-Calling Agent",
-        "outcome": "Answers real multi-step questions by chaining tools, gated against unsafe actions.",
-        "demo": "https://demo.example.com/trip-agent",
-        "metrics": "task success 0.95, 100% of ungranted actions blocked",
-        "stack": ["ReAct loop", "tool registry", "least-privilege guardrails"],
+        "name": "Autonomous Agent with Evals, Permissions and Cost Report",
+        "outcome": "Completes a multi-step task under an enforced permission model, and proves it.",
+        "demo": "https://demo.example.com/agentic-capstone",
+        "metrics": "outcome 2/2 and trajectory 2/2 on the eval set, every ungranted call blocked and traced",
+        "stack": ["agent loop", "trajectory + outcome evals", "permission model", "trace and cost report"],
     },
     {
         "name": "Reusable Eval Pipeline",
@@ -47,13 +47,6 @@ MANIFEST = [
         "demo": "https://demo.example.com/eval-pipeline",
         "metrics": "blocks 100% of seeded regressions, code + judge graders",
         "stack": ["golden dataset", "code grader", "LLM-as-judge", "gate"],
-    },
-    {
-        "name": "MCP-Connected Assistant",
-        "outcome": "Reaches tools over a standard protocol: build once, connect everywhere.",
-        "demo": "https://demo.example.com/mcp-assistant",
-        "metrics": "tools discovered and served over the transport, zero shared state",
-        "stack": ["MCP server", "MCP client", "JSON transport", "tool call"],
     },
     {
         "name": "Self-Red-Teamed Secure LLM App",
