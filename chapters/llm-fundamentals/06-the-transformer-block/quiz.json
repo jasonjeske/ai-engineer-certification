@@ -1,0 +1,73 @@
+{
+  "questions": [
+    {
+      "kind": "mcq",
+      "q": "In our pre-norm block, y = x + attention(norm1(x)). Which state should norm2 receive before the MLP?",
+      "choices": ["The original x, because its shape is the same", "The updated state y", "The attention weights before softmax", "Only the final token's row"],
+      "answer": 1,
+      "why": "The MLP processes the state after the attention update. Normalizing x again changes the sequential block into a different function even though shapes still match."
+    },
+    {
+      "kind": "mcq",
+      "q": "For input (B, T, C), what does nn.LayerNorm(C) normalize over?",
+      "choices": ["Every position and feature in each sequence", "All examples in the batch", "The C features independently at each batch-position pair", "The vocabulary axis"],
+      "answer": 2,
+      "why": "The normalized shape is the last axis. Each row has its own mean and population variance. The feature-wise affine parameters are shared across rows."
+    },
+    {
+      "kind": "mcq",
+      "q": "Why can a LayerNorm module output a row whose mean is not zero?",
+      "choices": ["LayerNorm always averages over the batch", "Evaluation mode uses stored running means", "It secretly changes the sequence length", "The learned affine scale and offset follow standardization"],
+      "answer": 3,
+      "why": "The lab sets gamma=2 and beta=3 and obtains mean 3.000000. Even before the affine step, epsilon makes unit variance only approximate for a nonconstant row."
+    },
+    {
+      "kind": "mcq",
+      "q": "What happens if you remove GELU from between the MLP's two affine maps, with dropout disabled?",
+      "choices": ["The pair can be expressed as one affine map", "The MLP becomes cross-token attention", "Each position obtains different learned weights", "Residual addition no longer requires matching shapes"],
+      "answer": 0,
+      "why": "Composing affine maps yields another affine map. Expanding the hidden width alone does not introduce a nonlinearity. This claim concerns the MLP, not the input-dependent attention operation."
+    },
+    {
+      "kind": "predict",
+      "q": "Both branch output projection weights AND biases are zeroed in our pre-norm block. What does block(x) return, and what is the gradient of block(x).sum() with respect to x?",
+      "answer": "It returns x exactly, and the input gradient is an all-ones tensor of the same shape. The lab prints identity error=0.000000 and gradient-to-ones error=0.000000.",
+      "why": "Both corrections are zero, leaving the direct residual paths. Internal normalization is still computed but contributes nothing to the output. Forgetting either output bias could leave a nonzero correction."
+    },
+    {
+      "kind": "predict",
+      "q": "Only one feature in the final position changes. Predict earlier outputs for the correctly wired causal stack and earlier normalized rows when LayerNorm incorrectly reduces over (T, C).",
+      "answer": "The correct stack's earlier outputs stay unchanged: maximum difference 0.000000 in the lab. The wrong normalization leaks the final position into earlier statistics: maximum difference 1.571958 in this run.",
+      "why": "Causal attention, per-row feature normalization, row-local MLPs and residual additions cannot introduce a future dependency. Cross-time statistics can, even if a later attention mask is correct. The negative control ensures the test can expose a real leak."
+    },
+    {
+      "kind": "explain",
+      "q": "Explain why the scalar gradient experiment demonstrates a direct derivative path without proving that residual networks always have stable gradients.",
+      "rubric": [
+        "For y=x+F(x), the scalar derivative is 1+F'(x), or I+J_F for vectors",
+        "The plain scale-0.5 chain multiplies factors of 0.5; the residual chain multiplies factors of 1.5 across 8 layers",
+        "The measured residual gradient 25.62890625 shows possible growth rather than a guarantee of unit scale",
+        "A branch scale of -1 cancels the identity path and yields zero gradient",
+        "This is a controlled scalar model, not evidence of transformer convergence or language capability"
+      ]
+    },
+    {
+      "kind": "explain",
+      "q": "How can a position-wise MLP use context? Apply the answer to changing an earlier token row instead of the final row in a causal block.",
+      "rubric": [
+        "Attention has already mixed permitted context into each row before the MLP runs",
+        "The same MLP weights are applied separately to each current row, without mixing the position axis",
+        "For fixed inputs directly entering an MLP, changing one row cannot affect other rows in that MLP call",
+        "For a full causal block, changing an earlier input row can affect that row and later rows through attention, but cannot affect rows before it",
+        "Distinguishes shared parameters, local computation, and contextualized activations; does not imply every allowed later row must change"
+      ]
+    }
+  ],
+  "recall": [
+    {"q": "Write the two pre-norm residual updates.", "a": "y = x + Attention(LN1(x)); out = y + MLP(LN2(y)). The second branch reads the updated y."},
+    {"q": "Which axes can a causal block's LayerNorm(C) read?", "a": "Only the feature axis within each token row. Reducing over time can leak future values into earlier positions."},
+    {"q": "Why is LayerNorm output not always mean zero and variance one?", "a": "Learned gamma and beta change the output distribution; epsilon prevents exactly unit standardized variance, and a constant row standardizes to zeros."},
+    {"q": "What is local and what is shared in a position-wise MLP?", "a": "Computation is independent across input rows, but all positions use the same weights. Each row may already contain context from attention."},
+    {"q": "What does the zero-branch identity test establish?", "a": "With both branch outputs zero, a correctly wired pre-norm block returns its input and propagates the identity derivative. It tests wiring, not model skill or general training stability."}
+  ]
+}

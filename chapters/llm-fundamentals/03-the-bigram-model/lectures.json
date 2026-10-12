@@ -1,0 +1,18 @@
+[
+  {
+    "title": "The spelled-out intro to language modeling: building makemore",
+    "speaker": "Andrej Karpathy",
+    "video_id": "PaCmpygFfXo",
+    "start": 765,
+    "anchor": "counting bigrams in a 2D torch tensor",
+    "why": "Build the pair-count matrix, identify input rows and target columns, and connect counting to fitting a model. Timestamp verified from the creator's chapter marker, not a transcript quotation."
+  },
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 1331,
+    "anchor": "simplest baseline: bigram language model, loss, generation",
+    "why": "Connect a next-token table with logits, cross entropy and autoregressive generation. Timestamp verified from the creator's chapter marker because transcript access was blocked."
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 2093,
+    "anchor": "training the bigram model",
+    "why": "Follow the optimizer setup and repeated forward, loss, backward and update operations. Distinguish gradient buffers from learned parameters.",
+    "verification": "Creator-published chapter marker, checked 2026-10-10; transcript retrieval IP-blocked. Anchor is a section title, not a spoken quotation."
+  },
+  {
+    "title": "Let's reproduce GPT-2 (124M)",
+    "speaker": "Andrej Karpathy",
+    "video_id": "l8pRSuU81PU",
+    "start": 9249,
+    "anchor": "gradient accumulation",
+    "why": "See why multiple backward passes can intentionally feed one optimizer update, and connect loss scaling to a mean over the effective batch.",
+    "verification": "Creator-published chapter marker, checked 2026-10-10; transcript retrieval IP-blocked. Anchor is a section title, not a spoken quotation."
+  }
+]

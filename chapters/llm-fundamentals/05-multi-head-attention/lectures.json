@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 4919,
+    "anchor": "multi-headed self-attention",
+    "why": "Independent head modules and concatenation; compare with the loop implementation in multihead_demo.py.",
+    "verification": "Creator-published chapter marker checked 2026-10-10; transcript API returned IpBlocked."
+  },
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 6382,
+    "anchor": "batched multi-headed self-attention",
+    "why": "Packed projections and head-axis reshaping in nanoGPT; compare with the lab's numerically equivalent packed path.",
+    "verification": "Creator-published chapter marker checked 2026-10-10; transcript API returned IpBlocked."
+  },
+  {
+    "title": "Attention in transformers, step-by-step | Deep Learning Chapter 6",
+    "speaker": "3Blue1Brown",
+    "video_id": "eMlx5fFNoYc",
+    "start": 1159,
+    "anchor": "Multiple heads",
+    "why": "Visual intuition for several routing patterns and their combined contribution. Distinguish the illustration from trained specialization evidence.",
+    "verification": "Creator-published chapter marker checked 2026-10-10; transcript API returned IpBlocked."
+  }
+]

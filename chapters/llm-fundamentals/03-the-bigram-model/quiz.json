@@ -1,0 +1,74 @@
+{
+  "questions": [
+    {
+      "kind": "mcq",
+      "q": "What information conditions this bigram model's next-token prediction?",
+      "choices": ["Every token in the generated string", "Only the immediately preceding token", "The preceding two tokens", "Only the sampling seed"],
+      "answer": 1,
+      "why": "The current token selects one row. The pair is current plus next, not two history tokens."
+    },
+    {
+      "kind": "mcq",
+      "q": "After adding alpha to every count in a V-column row, what is its denominator?",
+      "choices": ["The original row sum", "The entire matrix sum", "The original row sum plus alpha times V", "The column sum plus alpha"],
+      "answer": 2,
+      "why": "Every candidate successor receives alpha, so the row gains alpha times V total mass."
+    },
+    {
+      "kind": "mcq",
+      "q": "What happens to negative log likelihood when an observed target has probability zero?",
+      "choices": ["It is zero, because the pair was absent", "It becomes infinite", "It becomes the vocabulary size", "It is unaffected if other targets are likely"],
+      "answer": 1,
+      "why": "The negative log of zero is infinite. Clamping to a small number would change the scoring rule and conceal the model's zero probability."
+    },
+    {
+      "kind": "mcq",
+      "q": "Which data should select the smoothing strength before the final evaluation?",
+      "choices": ["The test set after each candidate change", "Only the generated samples", "The validation set", "Any set, because smoothing is not a fitted choice"],
+      "answer": 2,
+      "why": "Choose alpha on validation, freeze the choice, and use the held-out test set for the reported selected-model result. Repeated tuning on test leaks evaluation information."
+    },
+    {
+      "kind": "mcq",
+      "q": "Why can the same fitted model produce different samples?",
+      "choices": ["Sampling always updates the counts", "Sampling chooses among alternatives in a fixed distribution", "Each seed makes a new vocabulary", "A bigram remembers its previous sample"],
+      "answer": 1,
+      "why": "Fitting and decoding are separate. The seed controls random draws, not the probability table."
+    },
+    {
+      "kind": "predict",
+      "q": "The toy row for a is [0, 2, 1] over [a, b, c]. Predict its probabilities with add-one smoothing.",
+      "answer": "[1/6, 3/6, 2/6], printed [0.166667, 0.5, 0.333333].",
+      "why": "Each cell gains one; the denominator is the original total 3 plus vocabulary size 3, giving 6."
+    },
+    {
+      "kind": "predict",
+      "q": "Compare counting independent sequences [[0, 1], [2, 0]] with counting the joined sequence [0, 1, 2, 0]. Which extra pair appears only in the joined version?",
+      "answer": "The transition 1 -> 2.",
+      "why": "Joining fabricates an adjacency between the end of the first sequence and the start of the second. The independent-sequence function never crosses that boundary."
+    },
+    {
+      "kind": "predict",
+      "q": "Only the seed passed to generate changes. The probability table and test text remain fixed. What happens to mean test NLL?",
+      "answer": "It is unchanged. The generated sample can change, but scoring uses the same table and actual test transitions.",
+      "why": "Evaluation does not sample a continuation. It reads probabilities assigned to the observed target tokens."
+    },
+    {
+      "kind": "explain",
+      "q": "Why do contexts ab and cb produce identical next-token distributions here, and would learning the same table with gradients fix that?",
+      "rubric": ["Both contexts end in b, selecting the same row", "Earlier tokens are not an input to the prediction function", "Changing counts to learned logits changes parameterization or optimization, not accessible context", "Longer context requires a different conditioning representation", "More observed examples can refine the row but cannot make it distinguish those prefixes"]
+    },
+    {
+      "kind": "explain",
+      "q": "Fresh application: an x row over next tokens [x, y, z] has counts [2, 0, 0]. Use add-one smoothing to explain the probability of z, how you would score an observed x-to-z transition, and why this does not prove z really followed x in training.",
+      "rubric": ["The smoothed row is [3, 1, 1] with denominator 5", "The probability of z is 1/5 or 0.2", "The single-transition penalty is -ln(0.2), not the probability itself or a sampled outcome", "The pseudocount is a modeling allowance for an unobserved event, not an observed count", "A score evaluates predictive probability, not factual correctness or comprehension"]
+    }
+  ],
+  "recall": [
+    {"q": "What does bigram mean about available history?", "a": "A pair contains the current token and next token. This model conditions only on the current token."},
+    {"q": "What is add-alpha smoothing's denominator?", "a": "The current row's observed total plus alpha times the vocabulary size."},
+    {"q": "Why score held-out transitions rather than select a nice sample?", "a": "Loss measures probabilities assigned to actual unseen targets. A selected sample is affected by randomness and selection bias."},
+    {"q": "What does changing the generation seed change?", "a": "Random draws, not the fitted table or deterministic test loss."},
+    {"q": "Does smoothing solve unknown token IDs?", "a": "No. It covers unobserved transitions among known tokens; unknown vocabulary items need a separate tokenization policy."}
+  ]
+}

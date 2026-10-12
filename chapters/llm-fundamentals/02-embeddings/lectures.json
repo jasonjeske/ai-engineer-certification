@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Building makemore Part 2: MLP",
+    "speaker": "Andrej Karpathy",
+    "video_id": "TCH_1BHY58I",
+    "start": 3927,
+    "anchor": "visualizing the character embeddings",
+    "why": "Inspect the geometry of learned character vectors, then compare a learned representation with the named context axes of this chapter's supervised fixture.",
+    "verification": "Creator-published chapter marker found with tools/find_lecture_moment.py on 2026-10-10. Transcript unavailable: IpBlocked. Anchor is a marker title, not a verified spoken quotation."
+  },
+  {
+    "title": "Transformers, the tech behind LLMs | Deep Learning Chapter 5",
+    "speaker": "3Blue1Brown",
+    "video_id": "wjZofJX0v4M",
+    "start": 747,
+    "anchor": "Word embeddings",
+    "why": "Use the geometric picture to understand vectors and directions without treating individual coordinates as dictionary definitions.",
+    "verification": "Creator-published chapter marker found with tools/find_lecture_moment.py on 2026-10-10. Transcript unavailable: IpBlocked. Anchor is a marker title, not a verified spoken quotation."
+  },
+  {
+    "title": "Transformers, the tech behind LLMs | Deep Learning Chapter 5",
+    "speaker": "3Blue1Brown",
+    "video_id": "wjZofJX0v4M",
+    "start": 1105,
+    "anchor": "Embeddings beyond words",
+    "why": "Bridge from a static token lookup to representations that carry information about surrounding text. Later chapters build the mixing mechanism.",
+    "verification": "Creator-published chapter marker found with tools/find_lecture_moment.py on 2026-10-10. Transcript unavailable: IpBlocked. Anchor is a marker title, not a verified spoken quotation."
+  }
+]

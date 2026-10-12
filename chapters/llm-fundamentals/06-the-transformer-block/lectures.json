@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 5065,
+    "end": 5208,
+    "anchor": "feedforward layers of transformer block",
+    "why": "Connect position-wise feature transformation with attention's communication step. Verified creator chapter marker; transcript was IP-blocked, not quoted."
+  },
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 5208,
+    "end": 5571,
+    "anchor": "residual connections",
+    "why": "Trace the skip path around each branch and compare it with the lab's zero-branch identity test. Verified creator chapter marker; transcript was IP-blocked, not quoted."
+  },
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out.",
+    "speaker": "Andrej Karpathy",
+    "video_id": "kCc8FmEb1nY",
+    "start": 5571,
+    "anchor": "layernorm (and its relationship to our previous batchnorm)",
+    "why": "Track the normalization axes and placement, and distinguish row statistics from shared learned parameters. Verified creator chapter marker; transcript was IP-blocked, not quoted."
+  }
+]

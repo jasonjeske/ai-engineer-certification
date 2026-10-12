@@ -1,0 +1,4 @@
+[
+  {"title": "Let's reproduce GPT-2 (124M)", "speaker": "Andrej Karpathy", "video_id": "l8pRSuU81PU", "start": 2011, "end": 2222, "anchor": "sampling init, prefix tokens, tokenization", "why": "Creator chapter marker verified because transcripts were IP-blocked. Follow prompt tokenization and the setup that feeds generation."},
+  {"title": "Let's reproduce GPT-2 (124M)", "speaker": "Andrej Karpathy", "video_id": "l8pRSuU81PU", "start": 2222, "anchor": "sampling loop", "why": "Creator chapter marker verified because transcripts were IP-blocked. Compare last-position logits, normalization, candidate restriction, sampling and feedback with our helper."}
+]

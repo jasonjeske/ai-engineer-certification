@@ -1,0 +1,14 @@
+[
+ {"title": "Let's build the GPT Tokenizer", "speaker": "Andrej Karpathy", "video_id": "zduSFxRajkE",
+  "start": 289, "end": 400, "anchor": "spelling tasks",
+  "why": "His list of model failures that come from tokenization: spelling, trailing spaces, SolidGoldMagikarp."},
+ {"title": "Let's build the GPT Tokenizer", "speaker": "Andrej Karpathy", "video_id": "zduSFxRajkE",
+  "start": 1350, "end": 1700, "anchor": "pair encoding algorithm",
+  "why": "Byte-pair encoding built step by step, the same loop as this chapter's lab."},
+ {"title": "Let's build the GPT Tokenizer", "speaker": "Andrej Karpathy", "video_id": "zduSFxRajkE",
+  "start": 4100, "end": 4300, "anchor": "negative look ahead",
+  "why": "The GPT-4 split pattern, including the whitespace rule that made Python denser."},
+ {"title": "Deep Dive into LLMs like ChatGPT", "speaker": "Andrej Karpathy", "video_id": "7xTGNNLPyMI",
+  "start": 724, "end": 900, "anchor": "process called tokenization",
+  "why": "Where tokenization sits in the whole training pipeline, with GPT-4's tokenizer on screen."}
+]

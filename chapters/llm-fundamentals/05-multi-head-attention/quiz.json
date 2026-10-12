@@ -1,0 +1,61 @@
+{
+  "questions": [
+    {
+      "kind": "mcq",
+      "q": "With input width C and head width d, which features can a standard head's query projection use?",
+      "choices": ["Only its assigned slice of raw input coordinates", "Any of the C input coordinates through a learned C-by-d projection", "Only the previous token's features", "Only the other heads' queries"],
+      "answer": 1,
+      "why": "Each head projects the full input width. A packed implementation splits projected features into heads, not disjoint raw input slices."
+    },
+    {
+      "kind": "mcq",
+      "q": "When H*d=C, what do concatenation and the output projection do?",
+      "choices": ["Concatenation averages the heads; projection chooses a token", "Concatenation changes which positions are allowed; projection restores causality", "Concatenation preserves the head outputs side by side at width C; projection learns within-position feature mixing", "Both operations are softmax over heads"],
+      "answer": 2,
+      "why": "The concatenated width is already C in this design. The projection can combine, subtract, or rotate features without mixing token positions."
+    },
+    {
+      "kind": "mcq",
+      "q": "Which scale belongs in each head's dot-product attention scores?",
+      "choices": ["Divide by sqrt(d), where d is that head's query/key width", "Divide by sqrt(C), regardless of head width", "Multiply by the number of heads", "Divide by vocabulary size"],
+      "answer": 0,
+      "why": "The dot product sums over the head's d coordinates. The scaling motivation concerns that dimension, not total model width."
+    },
+    {
+      "kind": "mcq",
+      "q": "In the bias-free C=8 lab sweep, what happens when heads change from 1 to 4 at fixed B=2 and T=4?",
+      "choices": ["Parameters grow from 256 to 1024", "Parameters stay 256 and explicit score entries stay 32", "Parameters shrink to 64 and score entries grow", "Parameters stay 256, head width shrinks from 8 to 2, and explicit score entries grow from 32 to 128"],
+      "answer": 3,
+      "why": "Projection parameters are 4*C*C at fixed width. Explicit score storage is B*H*T*T, so it grows with head count."
+    },
+    {
+      "kind": "predict",
+      "q": "In the hand fixture, set the constant query feature to zero at every position. Predict both final head outputs and the final projected output.",
+      "answer": "Both final head outputs become [2.666667, 2.000000]. Concatenation is [2.666667, 2.000000, 2.666667, 2.000000]. The final projection gives [5.333333, 0.000000, 0.000000, 4.000000].",
+      "why": "All query-key scores become zero. Both heads uniformly average the same values. The output projection's difference coordinates vanish when head outputs agree. This intervention is run and asserted in lab.py."
+    },
+    {
+      "kind": "predict",
+      "q": "The fixture's head 1 output at the final position is [2, 10/7]. If its concatenated block is zeroed before the output projection, what is the original output minus the ablated output?",
+      "answer": "[2.000000, -1.428571, -2.000000, 1.428571], exactly [2, -10/7, -2, 10/7] up to floating-point rounding.",
+      "why": "The output coordinates are [a+c, b-d, a-c, b+d]. Head 1 supplies c and d, so its contribution includes negative signs. Attention weights alone do not describe this signed downstream effect."
+    },
+    {
+      "kind": "explain",
+      "q": "Explain how to verify that the complete multi-head module is causal, including the output projection, rather than checking only tensor shapes.",
+      "rubric": ["Change a later input position while leaving the earlier prefix fixed", "Recompute the final projected output and require earlier rows to remain unchanged", "Check every head has zero future attention weights and correctly normalized rows without dropout", "Run an unmasked negative control to prove the chosen perturbation would reveal leakage", "Explain that the output projection mixes features within a position, so correct token-wise projection preserves causality"]
+    },
+    {
+      "kind": "explain",
+      "q": "Explain why two independently parameterized heads are not proof of two semantic specialists. Apply this to the hand fixture and to a randomly initialized model.",
+      "rubric": ["Separate learned projections allow different routing and value features but do not force different useful roles", "The fixture's opposite patterns were hand-assigned, not learned from language", "Random parameters and nonzero gradients demonstrate trainability, not semantic competence", "A semantic role claim needs observations and interventions on a trained model across appropriate inputs", "Attention weights alone omit values, output projection and later computation"]
+    }
+  ],
+  "recall": [
+    {"q": "Does a standard attention head receive only one raw embedding slice?", "a": "No. Each head's projection can read the full input width; packed implementations split the projected representation into heads."},
+    {"q": "What are the packed Q and attention-weight shapes?", "a": "Q: (B,H,T,d). Weights: (B,H,T,T), with softmax across source positions on the last axis."},
+    {"q": "At fixed C=H*d, how many bias-free projection parameters does standard MHA have?", "a": "3*C*C for query, key and value projections plus C*C for the output projection: 4*C*C. Explicit score storage is a separate B*H*T*T count."},
+    {"q": "Why concatenate before the output projection?", "a": "Concatenation keeps head outputs distinguishable. The projection learns how to combine their features, including signed contributions, at each position."},
+    {"q": "What does a head's large attention weight fail to tell you?", "a": "It omits value content, output projection and later computation. It does not by itself prove a semantic role or explain a final answer."}
+  ]
+}

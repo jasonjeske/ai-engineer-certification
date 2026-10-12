@@ -1,0 +1,5 @@
+[
+  {"title":"Let's reproduce GPT-2 (124M)","speaker":"Andrej Karpathy","video_id":"l8pRSuU81PU","start":3974,"end":4427,"anchor":"parameter sharing wte and lm_head","why":"Watch how sharing the token embedding and output head changes unique parameter accounting. Anchor verified against the creator-published chapter marker, not a retrieved transcript."},
+  {"title":"Let's reproduce GPT-2 (124M)","speaker":"Andrej Karpathy","video_id":"l8pRSuU81PU","start":9249,"end":10012,"anchor":"gradient accumulation","why":"Connect the familiar optimization loop to an effective batch too large for one microbatch. Anchor verified against the creator-published chapter marker, not a retrieved transcript."},
+  {"title":"[1hr Talk] Intro to Large Language Models","speaker":"Andrej Karpathy","video_id":"zjkBMFhNj_g","start":1543,"end":1663,"anchor":"LLM Scaling Laws","why":"Connect model size, data and compute, then compare this overview with the original Kaplan and Chinchilla papers. Historical lecture, not a current model ranking. Anchor verified against the creator-published chapter marker."}
+]

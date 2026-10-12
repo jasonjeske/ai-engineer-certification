@@ -1,0 +1,36 @@
+{
+ "questions": [
+  {"kind": "mcq", "q": "Why can a byte-level BPE tokenizer encode any text, including a language it never saw in training?",
+   "choices": ["Its vocabulary includes every word in every language", "Its base vocabulary is the 256 possible byte values, and all text is stored as bytes", "It falls back to an UNK token for unknown characters", "It retrains itself on new text automatically"],
+   "answer": 1, "why": "Any UTF-8 text is a sequence of bytes, and all 256 bytes are in the base vocabulary, so the worst case is one token per byte."},
+  {"kind": "mcq", "q": "What does the regular-expression pre-split prevent?",
+   "choices": ["Tokens longer than four bytes", "Merges that cross word, number, punctuation or whitespace boundaries, such as 'dog.'", "Non-English text from being encoded", "The model from seeing spaces"],
+   "answer": 1, "why": "Merges are only allowed inside a chunk, so vocabulary is not wasted on accidental combinations like a word plus its punctuation."},
+  {"kind": "mcq", "q": "When encoding new text, which merge does the tokenizer apply next?",
+   "choices": ["The pair that is most frequent in the new text", "The pair that produces the longest token", "Among pairs present, the one that was learned earliest in training (lowest rank)", "A random learned pair"],
+   "answer": 2, "why": "Replaying merges in training order reproduces the exact decisions training made. tiktoken calls this order the rank."},
+  {"kind": "mcq", "q": "Which is a real cost of a much larger vocabulary?",
+   "choices": ["Longer token sequences", "A bigger embedding table and output layer, plus rare tokens that barely get trained", "The tokenizer can no longer encode emoji", "Decoding becomes lossy"],
+   "answer": 1, "why": "Each token needs an embedding row and an output score; GPT-2 small spends about 38.6M of its 124M parameters on the embedding table. Rare tokens get few training updates."},
+  {"kind": "mcq", "q": "In o200k_base, how many tokens is ' strawberry' (with a leading space) versus 'strawberry'?",
+   "choices": ["1 and 3", "10 and 10", "3 and 1", "2 and 2"],
+   "answer": 0, "why": "Measured in the lab: the space-prefixed word is a single token, the bare word splits into 'st', 'raw', 'berry'."},
+  {"kind": "predict", "q": "The lab's sweep showed 1.92 bytes per token at vocabulary 512 and 2.31 at 1,024. If you train with 2,048, will the gain be larger or smaller than 0.39?",
+   "answer": "Smaller. With the same 200,000 character training text, a 2,048 vocabulary measured 2.65 bytes per token, a gain of 0.34 versus 0.39 for 512 to 1,024.",
+   "why": "Each new merge covers a less frequent pair than the one before, so compression rises with diminishing returns."},
+  {"kind": "predict", "q": "What tokens does cl100k_base produce for '127 + 4 = 131'?",
+   "answer": "'127', ' +', ' ', '4', ' =', ' ', '131' (7 tokens).",
+   "why": "The digit rule matches runs of 1 to 3 digits without a leading space, so the space before a number becomes its own token."},
+  {"kind": "explain", "q": "Explain why the same request costs more in Polish than in English, using the lab's numbers.",
+   "rubric": ["Vocabulary built mostly from English-heavy data has more whole-word tokens for English", "Polish letters like ń and ę take two UTF-8 bytes and may not be single tokens", "Numbers: English 7 tokens in all three; Polish 16 in GPT-2, 11 in cl100k, 10 in o200k", "Price and context use are per token, so more tokens means more cost and less room"]},
+  {"kind": "explain", "q": "Explain why a model that knows what a strawberry is can still miscount its r's.",
+   "rubric": ["The model sees token IDs, not letters", "' strawberry' is one token; 'strawberry' is three", "Letter content of a token must be learned indirectly from data", "Spelling the word out first turns letters into separate tokens and helps"]}
+ ],
+ "recall": [
+  {"q": "What is the base vocabulary of byte-level BPE, and why?", "a": "The 256 byte values, so every possible text can be encoded with no unknown tokens."},
+  {"q": "What is a BPE tokenizer, saved to disk?", "a": "The ordered list of merges (plus the regex split pattern). The vocabulary is rebuilt from them."},
+  {"q": "GPT-2, GPT-4 and GPT-4o encodings and sizes?", "a": "gpt2 50,257; cl100k_base about 100K; o200k_base about 200K tokens."},
+  {"q": "Why is ' strawberry' with a space one token but 'strawberry' three?", "a": "Word tokens carry their leading space; the common form ' strawberry' earned its own merge, the bare form did not."},
+  {"q": "Is the tokenizer trained with the model?", "a": "No. It is trained separately first and then frozen; embeddings are tied to its token IDs."}
+ ]
+}

@@ -1,9 +1,0 @@
-{
-  "vocab": "\n ,.abcdefghijklmnopqrstuvwxyz",
-  "c": 128,
-  "n_layer": 4,
-  "n_block": 128,
-  "vocab_size": 30,
-  "steps": 1500,
-  "final_loss": 0.11119922772049903
-}

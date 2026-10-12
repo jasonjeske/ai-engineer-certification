@@ -1,0 +1,5 @@
+[
+ {"title": "Let's build GPT: from scratch, in code, spelled out.", "speaker": "Andrej Karpathy", "video_id": "kCc8FmEb1nY", "start": 2831, "end": 3720, "anchor": "matrix multiply as weighted aggregation", "why": "Build the uniform mixing baseline before replacing fixed weights with content-dependent scores. Verified using creator chapter markers; transcript IP-blocked."},
+ {"title": "Let's build GPT: from scratch, in code, spelled out.", "speaker": "Andrej Karpathy", "video_id": "kCc8FmEb1nY", "start": 3720, "end": 4298, "anchor": "version 4: self-attention", "why": "Compare the trainable query/key mechanism to our explicitly constructed head. Verified using creator chapter markers; transcript IP-blocked."},
+ {"title": "Attention in transformers, step-by-step | Deep Learning Chapter 6", "speaker": "3Blue1Brown", "video_id": "eMlx5fFNoYc", "start": 668, "end": 944, "anchor": "Masking", "why": "Follow the mask, then the value vectors, to separate routing weights from routed content. Verified using creator chapter markers; transcript IP-blocked."}
+]

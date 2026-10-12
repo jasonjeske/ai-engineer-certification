@@ -1,0 +1,73 @@
+{
+  "questions": [
+    {
+      "kind": "mcq",
+      "q": "Token embeddings have shape (2, 6, 8) and position embeddings have shape (6, 8). What does adding them do?",
+      "choices": ["Concatenates them into width 16", "Adds a shared position signal across batch rows while keeping shape (2, 6, 8)", "Changes the vocabulary size to 8", "Makes every occurrence of a token identical after addition"],
+      "answer": 1,
+      "why": "Broadcasting repeats the position table across independent examples. Coordinatewise addition preserves the feature width and supplies a position-dependent signal."
+    },
+    {
+      "kind": "mcq",
+      "q": "The final representation has shape (2, 6, 8), and V is 9. What does the head return in tutorlab.gpt?",
+      "choices": ["One sampled token", "Attention weights with shape (6, 6)", "Logits with shape (2, 6, 9)", "A normalized scalar confidence"],
+      "answer": 2,
+      "why": "It maps each width-8 representation to nine candidate scores, keeping the batch and time axes. Softmax and token selection are distinct later operations."
+    },
+    {
+      "kind": "mcq",
+      "q": "Which construction gives separately parameterized blocks that PyTorch registers?",
+      "choices": ["nn.ModuleList(Block(cfg) for _ in range(cfg.n_layer))", "A plain list of new blocks stored only as a Python list", "nn.ModuleList([one_block] * cfg.n_layer)", "Repeatedly calling the same block and renaming its outputs"],
+      "answer": 0,
+      "why": "The first construction calls the constructor anew at each depth and registers the resulting modules. Repeating one instance shares parameters. A plain list alone does not register its children."
+    },
+    {
+      "kind": "mcq",
+      "q": "All output probability rows are finite, nonnegative and sum to one. What has this established?",
+      "choices": ["The model learned grammar", "The model cannot leak future information", "The model will generalize after training", "A probability-format invariant, not prediction quality or causality"],
+      "answer": 3,
+      "why": "Even random or noncausal predictors can produce valid probability distributions. Other tests must establish the separate contracts."
+    },
+    {
+      "kind": "mcq",
+      "q": "What is tied in this model, and how should it be counted?",
+      "choices": ["All transformer blocks share one set of parameters", "The position and token tables share all their rows", "The input token table and output head use the same Parameter, counted once", "The output probabilities are copied from the input IDs"],
+      "answer": 2,
+      "why": "model.head.weight is model.tok_emb.weight. The block weights are independent; the tied table is used for lookup at the input and dot-product scoring at the output."
+    },
+    {
+      "kind": "predict",
+      "q": "With the six-token input in evaluation mode, change only its final token ID. Which logit rows may change, and which must remain equal within tolerance?",
+      "answer": "Only the final row, index 5, may change. Rows 0 through 4 must stay equal within tolerance.",
+      "why": "The final token cannot influence an earlier position through any causal attention layer. The final position sees its own changed token. 'May' is deliberate: causality does not guarantee a nonzero response to every possible edit."
+    },
+    {
+      "kind": "predict",
+      "q": "Change n_head from 2 to 4, keeping width 8, depth 3, vocabulary 9 and block_size 6. Does the 2,752-parameter count change in this implementation?",
+      "answer": "No. The total stays 2,752 and the output remains (2, 6, 9). Each head gets fewer features.",
+      "why": "The combined QKV and output projections remain the same size at fixed total width. Both head counts divide width 8. The feature partition and computation change, not the number of projection parameters."
+    },
+    {
+      "kind": "explain",
+      "q": "Explain how input IDs become next-token scores and why the blocks can be stacked without growing the sequence or feature width.",
+      "rubric": ["IDs select token-table rows; position rows are added, not concatenated", "Representations become (B,T,C) and each separately parameterized block preserves that shape", "Attention reads allowed context and the MLP transforms each position, with pre-norm and residual additions", "Final normalization and the tied head map C features to V raw scores per position", "Softmax is over V; token selection is separate; random weights imply no demonstrated language competence"]
+    },
+    {
+      "kind": "explain",
+      "q": "An unchanged earlier prefix receives different logits after you edit only a later suffix. Describe a useful diagnosis and one control experiment.",
+      "rubric": ["Under deterministic evaluation the no-future-leakage contract is violated", "First disable dropout with eval and compare the same model and same positions using numeric tolerance", "Inspect attention-mask direction and application in every block and accidental mixing across the time axis", "Compare prefix-only and full-sequence prefix logits; separately check batch independence", "A valid probability sum cannot rule out this bug; do not simply train longer"]
+    },
+    {
+      "kind": "explain",
+      "q": "Why are inputs and targets different slices of the same original string, and what would go wrong if targets equaled inputs?",
+      "rubric": ["At position t the task is to predict the following token using the available prefix", "For bad ca. the input is bad ca and the target is ad ca.", "Using the same slice would reward copying the current visible token rather than next-token prediction", "The current tutorlab GPT does not shift labels internally", "Cross entropy receives raw vocabulary logits and integer target IDs"]
+    }
+  ],
+  "recall": [
+    {"q": "What is the shape path through this GPT?", "a": "IDs (B,T), embedding plus positions (B,T,C), every block (B,T,C), final head (B,T,V)."},
+    {"q": "What is the difference between logits, probabilities and a generated token?", "a": "Logits are raw candidate scores. Softmax normalizes over the vocabulary. Sampling or a selection policy chooses an ID, which can then be appended."},
+    {"q": "What does weight tying mean in tutorlab.gpt?", "a": "The input token embedding and output head reference the same Parameter, counted once. Distinct transformer blocks still have independent parameters."},
+    {"q": "What intervention tests full-model causality?", "a": "Change only a suffix and verify unchanged earlier logits in deterministic evaluation mode, within tolerance. Also check that the intervention really changes some later output."},
+    {"q": "Should cross entropy receive softmax probabilities in this lab?", "a": "No. It expects raw logits and internally performs logarithmic normalization. Targets are the shifted next-token IDs."}
+  ]
+}
